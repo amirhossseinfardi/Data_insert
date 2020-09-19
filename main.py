@@ -130,3 +130,11 @@ temp_unit = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[5]/div/div[2]/d
 s.driver.ensure_element_by_xpath(unit_xpath,
                                  timeout=10).ensure_click()
 
+# ------------ save and exit -----------
+exit_menu_xpath = '//*[@id="pmf"]/div[3]/a'
+s.driver.ensure_element_by_xpath(exit_menu_xpath,
+                                 timeout=10).ensure_click()
+time.sleep(1)
+exit_path = '//*[@id="pmf"]/div[3]/div/button[2]'
+s.driver.ensure_element_by_xpath(exit_path,
+                                 timeout=10).ensure_click()

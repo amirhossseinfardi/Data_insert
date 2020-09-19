@@ -64,3 +64,28 @@ select_category = '//*[@id="page_content_inner"]/div/div[2]/div[1]/div[2]/div/di
 s.driver.ensure_element_by_xpath(select_category,
                                  timeout=10).ensure_click()
 
+# ---------------------- price and availability ( قیمت و موجودی ) ----------------
+price_title_xpath = '//*[@id="product_modify_package_title_control"]'
+price_title = 'قیمت کل'
+s.driver.ensure_element_by_xpath(price_title_xpath, timeout=10).send_keys(price_title)
+
+price_detail_xpath = '//*[@id="product_modify_package_title_per_control"]'
+price_detail = 'قیمت جز'
+s.driver.ensure_element_by_xpath(price_detail_xpath, timeout=10).send_keys(price_detail)
+
+inquiry = True
+
+if inquiry:
+    inquiry_click_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/span'
+    s.driver.ensure_element_by_xpath(inquiry_click_xpath,
+                                     timeout=10).ensure_click()
+    maximum_order_xpath = '//*[@id="pkg_max_order_0"]'
+    maximum_order = 20
+    s.driver.ensure_element_by_xpath(maximum_order_xpath, timeout=10).send_keys(maximum_order)
+
+inventory_xpath = '//*[@id="product_modify_quantity_control"]'
+inventory_value = '1000'
+s.driver.ensure_element_by_xpath(inventory_xpath, timeout=10).send_keys(inventory_value)
+
+
+

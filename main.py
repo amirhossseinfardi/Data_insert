@@ -51,5 +51,16 @@ new_product = '//*[@id="main_view"]/div/div/div[2]/a'
 s.driver.ensure_element_by_xpath(new_product,
                                  state='clickable',
                                  timeout=10).ensure_click()
+time.sleep(10)
+# ---------------------- product detail ( جزییات محصولات ) ----------------
+product_name_xpath = '//*[@id="product_modify_title_control_farsi"]'
+product_name = 'امیرحسین'
+s.driver.ensure_element_by_xpath(product_name_xpath, timeout=10).send_keys(product_name)
 
+open_category_menu = '//*[@id="page_content_inner"]/div/div[2]/div[1]/div[2]/div/div[1]/div[3]/div/div[1]'
+s.driver.ensure_element_by_xpath(open_category_menu,
+                                 timeout=10).ensure_click()
+select_category = '//*[@id="page_content_inner"]/div/div[2]/div[1]/div[2]/div/div[1]/div[3]/div/div[2]/div[2]/div[11]'
+s.driver.ensure_element_by_xpath(select_category,
+                                 timeout=10).ensure_click()
 

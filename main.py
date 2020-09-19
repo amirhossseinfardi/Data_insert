@@ -47,4 +47,9 @@ s.driver.ensure_element_by_xpath(sidebar_shopping_manager_product_xpath, timeout
 # s.driver.get(product_page)
 
 # ----------------- open new product ---------------------
+new_product = '//*[@id="main_view"]/div/div/div[2]/a'
+s.driver.ensure_element_by_xpath(new_product,
+                                 state='clickable',
+                                 timeout=10).ensure_click()
+
 

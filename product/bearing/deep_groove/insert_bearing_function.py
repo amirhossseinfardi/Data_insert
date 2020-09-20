@@ -117,7 +117,8 @@ def insertData(df_insert_data):
                                              timeout=5).ensure_click()
             print('no predefine value')
         except:
-            add_text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[2]/div/div[2]/div/div/div/div[2]/div/div'
+            add_text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]' \
+                             '/div[2]/div/div[2]/div/div/div/div[2]/div/div'
             # div[1]/input to div[2]/div/div
             text_input = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[2]/div/div[2]/div/div/div/div[1]/input'
             s.driver.ensure_element_by_xpath(text_input, timeout=10).send_keys(match_text)
@@ -141,9 +142,11 @@ def insertData(df_insert_data):
         # s.driver.ensure_element_by_xpath(unit_menu_xpath,
         #                                  timeout=10).ensure_click()
         # time.sleep(0.5)
-        # temp_unit = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[5]/div/div[2]/div/div/div[2]/select/option[2]'
+        # temp_unit = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[5]/
+        # div/div[2]/div/div/div[2]/select/option[2]'
         # s.driver.ensure_element_by_xpath(unit_xpath,
         #                                  timeout=10).ensure_click()
+
         # -------------------------- insert ID_TOL
         value_input_xpath = '/html/body/div[5]/div/div/div[1]/form/div[2]/div/div[2]/div[3]' \
                             '/div[6]/div/div[2]/div/div/div[1]/div/input'

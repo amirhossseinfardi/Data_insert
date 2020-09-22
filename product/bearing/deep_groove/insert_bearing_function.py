@@ -52,9 +52,6 @@ def insertData(df_insert_data):
     # ------------ end of static content ------------
 
     # select categoty
-    select_sku = 41030101003
-    select_sku_xpath = '//*[@id="product_list_search"]'
-    s.driver.ensure_element_by_xpath(select_sku_xpath, timeout=20).send_keys(select_sku)
 
     open_category_list = '/html/body/div[5]/div/div/div[1]/div[1]/div/div/div[1]/div/div[1]'
     # open_category_list1 = '//*[@id="page_heading"]/div/div[1]/div/div[1]/input'
@@ -84,9 +81,33 @@ def insertData(df_insert_data):
 
     # df_data = pd.read_excel('data.xlsx')
     df_data = df_insert_data
-    print(df_data)
+    # print(df_data)
     # time.sleep(60)
     for index, rows in df_data.iterrows():
+
+        # select main product to copy based on sealing
+        Z_series = ['Z', 'ZZ', '2Z']
+        RS_series = ['RS']
+        ZNR = ['ZNR']
+        if any(x in rows.trade_name for x in Z_series):
+            select_sku = 41030101009
+            material = 'فلزی'
+            seal = True
+        elif any(x in rows.trade_name for x in RS_series):
+            select_sku = 41030101009
+            material = 'نیتریل'
+            seal = True
+        elif any(x in rows.trade_name for x in ZNR):
+            select_sku = 41030101009
+            material = 'فلزی'
+            seal = True
+        else:
+            select_sku = 41030101003
+            seal = False
+        select_sku_xpath = '//*[@id="product_list_search"]'
+        s.driver.ensure_element_by_xpath(select_sku_xpath, timeout=20).clear()
+        s.driver.ensure_element_by_xpath(select_sku_xpath, timeout=20).send_keys(select_sku)
+        time.sleep(3)
 
         # copy and duplicate product
         old_product_xpath = '//*[@id="product_list"]/div/div/div[1]/div[1]/i'
@@ -194,7 +215,38 @@ def insertData(df_insert_data):
                             '/div[14]/div/div[2]/div/div/div[1]/div/input'
         value_input = rows.rpm
         s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).clear()
-        s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).send_keys(str(value_input))
+        s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).send_keys(str(int(value_input)))
+
+        # ----------------------------- seal
+        if seal:
+            text_menu_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[20]/div/div[2]/div/div/div/div[1]'
+            s.driver.ensure_element_by_xpath(text_menu_xpath,
+                                             timeout=20).ensure_click()
+            # text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[2]
+            # /div/div[2]/div/div/div/div[2]/div/div[1]'
+            # s.driver.ensure_element_by_xpath(text_xpath,
+            #                                  timeout=10).ensure_click()
+            match_text = material
+            remove_text = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[20]/div/div[2]/div/div/div/div[1]/input'
+            s.driver.ensure_element_by_xpath(remove_text,
+                                             timeout=10).send_keys(Keys.BACKSPACE)
+            try:
+                text_xpath = '//*[text()="{temp}"]'.format(temp=match_text)
+                print(text_xpath)
+                s.driver.ensure_element_by_xpath(text_xpath,
+                                                 timeout=5).ensure_click()
+                print('predefine value')
+            except:
+                add_text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]' \
+                                 '/div[20]/div/div[2]/div/div/div/div[2]/div/div'
+                # div[1]/input to div[2]/div/div
+                text_input = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[20]/div/div[2]/' \
+                             'div/div/div/div[1]/input'
+                s.driver.ensure_element_by_xpath(text_input, timeout=10).send_keys(match_text)
+                time.sleep(0.5)
+                s.driver.ensure_element_by_xpath(add_text_xpath,
+                                                 timeout=10).ensure_click()
+                print('new material added')
 
         # -------------- save and exit
         exit_menu_xpath = '//*[@id="pmf"]/div[3]/a'

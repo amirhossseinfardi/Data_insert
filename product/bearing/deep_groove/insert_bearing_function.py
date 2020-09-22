@@ -214,8 +214,12 @@ def insertData(df_insert_data):
         value_input_xpath = '/html/body/div[5]/div/div/div[1]/form/div[2]/div/div[2]/div[3]' \
                             '/div[14]/div/div[2]/div/div/div[1]/div/input'
         value_input = rows.rpm
+        print(type(value_input))
         s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).clear()
-        s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).send_keys(str(int(value_input)))
+        if isinstance(value_input, (int, float)):
+            s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).send_keys(str(int(value_input)))
+        else:
+            s.driver.ensure_element_by_xpath(value_input_xpath, timeout=10).send_keys(value_input)
 
         # ----------------------------- seal
         if seal:

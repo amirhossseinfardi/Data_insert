@@ -83,6 +83,7 @@ def insertData(df_insert_data):
     df_data = df_insert_data
     # print(df_data)
     # time.sleep(60)
+    count = 0
     for index, rows in df_data.iterrows():
 
         # select main product to copy based on sealing
@@ -133,7 +134,7 @@ def insertData(df_insert_data):
                                          timeout=10).send_keys(Keys.BACKSPACE)
         try:
             text_xpath = '//*[text()="{temp}"]'.format(temp=match_text)
-            print(text_xpath)
+            # print(text_xpath)
             s.driver.ensure_element_by_xpath(text_xpath,
                                              timeout=5).ensure_click()
             print('no predefine value')
@@ -260,4 +261,6 @@ def insertData(df_insert_data):
         exit_path = '//*[@id="pmf"]/div[3]/div/button[2]'
         s.driver.ensure_element_by_xpath(exit_path,
                                          timeout=10).ensure_click()
+        count = count + 1
+        print(count)
         time.sleep(10)

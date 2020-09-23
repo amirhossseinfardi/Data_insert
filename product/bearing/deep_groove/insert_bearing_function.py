@@ -90,15 +90,17 @@ def insertData(df_insert_data):
         Z_series = ['Z', 'ZZ', '2Z']
         RS_series = ['RS']
         ZNR = ['ZNR']
-        if any(x in rows.trade_name for x in Z_series):
+        ZNR_seal = False
+        if any(x in rows.trade_name for x in ZNR):
             select_sku = 41030101009
             material = 'فلزی'
             seal = True
+            ZNR_seal = True
         elif any(x in rows.trade_name for x in RS_series):
             select_sku = 41030101009
             material = 'نیتریل'
             seal = True
-        elif any(x in rows.trade_name for x in ZNR):
+        elif any(x in rows.trade_name for x in Z_series):
             select_sku = 41030101009
             material = 'فلزی'
             seal = True
@@ -252,6 +254,13 @@ def insertData(df_insert_data):
                 s.driver.ensure_element_by_xpath(add_text_xpath,
                                                  timeout=10).ensure_click()
                 print('new material added')
+
+        # ---------------------- khardar ZNR
+        if ZNR_seal:
+            khardar_image_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[3]/div/' \
+                                  'div[2]/div/div/label[3]/div/input'
+            s.driver.ensure_element_by_xpath(khardar_image_xpath,
+                                             timeout=10).ensure_click()
 
         # -------------- save and exit
         exit_menu_xpath = '//*[@id="pmf"]/div[3]/a'

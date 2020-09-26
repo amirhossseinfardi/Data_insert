@@ -91,11 +91,18 @@ def insertData(df_insert_data):
         RS_series = ['RS']
         ZNR = ['ZNR']
         ZNR_seal = False
+        TN_series = ['TN']
+        TN_cage = False
         if any(x in rows.trade_name for x in ZNR):
             select_sku = 41030101009
             material = 'فلزی'
             seal = True
             ZNR_seal = True
+        elif any(x in rows.trade_name for x in TN_series):
+            select_sku = 41030101009
+            material = 'فلزی'
+            seal = True
+            TN_cage = True
         elif any(x in rows.trade_name for x in RS_series):
             select_sku = 41030101009
             material = 'نیتریل'
@@ -258,10 +265,40 @@ def insertData(df_insert_data):
         # ---------------------- khardar ZNR
         if ZNR_seal:
             khardar_image_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[3]/div/' \
-                                  'div[2]/div/div/label[3]/div/input'
+                                  'div[2]/div/div/label[3]'
             s.driver.ensure_element_by_xpath(khardar_image_xpath,
                                              timeout=10).ensure_click()
 
+        # ------------------ cage material
+        if TN_cage:
+            text_menu_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[19]/div/div[2]/div/div/div/div[1]'
+            s.driver.ensure_element_by_xpath(text_menu_xpath,
+                                             timeout=20).ensure_click()
+            # text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[2]
+            # /div/div[2]/div/div/div/div[2]/div/div[1]'
+            # s.driver.ensure_element_by_xpath(text_xpath,
+            #                                  timeout=10).ensure_click()
+            match_text = 'فایبر گلس تقویت شده'
+            remove_text = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[19]/div/div[2]/div/div/div/div[1]/input'
+            s.driver.ensure_element_by_xpath(remove_text,
+                                             timeout=10).send_keys(Keys.BACKSPACE)
+            try:
+                text_xpath = '//*[text()="{temp}"]'.format(temp=match_text)
+                print(text_xpath)
+                s.driver.ensure_element_by_xpath(text_xpath,
+                                                 timeout=5).ensure_click()
+                print('predefine value')
+            except:
+                add_text_xpath = '//*[@id="page_content_inner"]/div/div[2]/div[3]' \
+                                 '/div[19]/div/div[2]/div/div/div/div[2]/div/div'
+                # div[1]/input to div[2]/div/div
+                text_input = '//*[@id="page_content_inner"]/div/div[2]/div[3]/div[19]/div/div[2]/' \
+                             'div/div/div/div[1]/input'
+                s.driver.ensure_element_by_xpath(text_input, timeout=10).send_keys(match_text)
+                time.sleep(0.5)
+                s.driver.ensure_element_by_xpath(add_text_xpath,
+                                                 timeout=10).ensure_click()
+                print('new cage added')
         # -------------- save and exit
         exit_menu_xpath = '//*[@id="pmf"]/div[3]/a'
         s.driver.ensure_element_by_xpath(exit_menu_xpath,

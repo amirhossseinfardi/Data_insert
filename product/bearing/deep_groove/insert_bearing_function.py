@@ -60,7 +60,7 @@ def insertData(df_insert_data):
                                      timeout=10).ensure_click()
 
     # select bearing deep groove
-    unit_temp = '/html/body/div[5]/div/div/div[1]/div[1]/div/div/div[1]/div/div[2]/div/div[151]'
+    unit_temp = '/html/body/div[5]/div/div/div[1]/div[1]/div/div/div[1]/div/div[2]/div/div[153]'
     s.driver.ensure_element_by_xpath(unit_temp,
                                      timeout=10).ensure_click()
     time.sleep(1)

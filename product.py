@@ -4,6 +4,7 @@ from insert_function import insertSelectableValue
 from insert_function import insertValue
 from insert_function import insertSelectImage
 
+
 def insertData(df_insert_data):
     # initialize chrome
     s = Session(webdriver_path=r'C:\chromedriver\chromedriver.exe',
